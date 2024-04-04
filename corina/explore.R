@@ -1,1 +1,1 @@
-data = read.csv("~/Documents/prosperLoanData.csv")
+data = read.csv("datasets/CleanedProsperData.csv")
