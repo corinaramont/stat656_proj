@@ -44,8 +44,22 @@ df$CurrentlyInGroup = as.integer(as.logical(df$CurrentlyInGroup))
 table(df$IncomeVerifiable)
 df$IncomeVerifiable = as.integer(as.logical(df$IncomeVerifiable))
 
-table(df2$IsBorrowerHomeowner)
+table(df$IsBorrowerHomeowner)
 df$IsBorrowerHomeowner = as.integer(as.logical(df$IsBorrowerHomeowner))
 
 var = colnames(df)
 
+## We should remove variables that have a lot of NA's
+colSums(is.na(df)) / nrow(df)
+
+# As we can see, there are some variables that have like 80% of their values as NA's. As such, 
+# they should be removed.
+df <- df[,colSums(is.na(df)) / nrow(df) < 0.8]
+
+## We should also only keep information on loans that have actually finished
+table(df$LoanStatus)
+
+# As such, the Chargedoff, Completed, and Defaulted loans are the only ones that have finished.
+df <- df[df$LoanStatus %in% c("Chargedoff", "Completed", "Defaulted"),]
+
+write.csv(df, "CleanedProsperData.csv")
