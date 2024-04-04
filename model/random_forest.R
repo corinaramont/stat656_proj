@@ -13,7 +13,12 @@ data = read.csv("datasets/CleanedProsperData.csv")
 set.seed(656)
 train_index = createDataPartition(data$LoanStatus, p = .8, list = FALSE) %>% 
   as.vector(.)
-train_data = data[train_index,]
-test_data = data[-train_index,]
+train_data = (data[train_index,])[,-c(1,2)]
+test_data = (data[-train_index,])[,-c(1,2)]
 
 # Run model --------------------------------------------------------------------
+#rf = randomForest(LoanStatus ~ ., data = train_data, ntree = 5000)
+
+# Tuning random forest ---------------------------------------------------------
+
+# Running rf again using tuned parameters --------------------------------------
