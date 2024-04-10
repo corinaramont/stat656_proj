@@ -63,7 +63,7 @@ df <- df[df$LoanStatus %in% c("Chargedoff", "Completed", "Defaulted"),]
 df <- df[, !names(df) %in% c("ListingKey", "ListingNumber","GroupKey","LoanKey","LoanNumber",'MemberKey')]
 
 # Removing alpha versions of ProsperRating, correlated/corresponds with numeric version
-df <-df[, names(df) != "ProsperRating..Alpha"]
+df <-df[, !names(df) == "ProsperRating..Alpha"]
 
 # Make date columns into Dates in R
 
