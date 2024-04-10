@@ -22,13 +22,10 @@ nrow(df)
 ### only include relevant variables
 
 # APR > interest rate for usage, apparently (from Google) - they are highly correlated
-cor(df$BorrowerAPR, df$BorrowerRate, use = "pairwise.complete.obs")
-
+# cor(df$BorrowerAPR, df$BorrowerRate, use = "pairwise.complete.obs")
 
 # checking the datatypes of each variable
-apply(df[-1,], 2, typeof)
-
-
+# apply(df[-1,], 2, typeof)
 
 ### Correcting variable types
 
@@ -76,4 +73,5 @@ df$DateCreditPulled <- as.Date(df$DateCreditPulled)
 df$FirstRecordedCreditLine <- as.Date(df$FirstRecordedCreditLine)
 df$LoanOriginationDate <- as.Date(df$LoanOriginationDate)
 
-write.csv(df, "CleanedProsperData.csv")
+write.csv(df, "datasets/CleanedProsperData.csv")
+
