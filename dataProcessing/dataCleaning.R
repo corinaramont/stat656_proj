@@ -3,7 +3,7 @@
 # libraries
 library(dplyr)
 
-df = read.csv("prosperLoanData.csv")
+df = read.csv("datasets/prosperLoanData.csv")
 
 dim(df)
 names(df)
@@ -61,5 +61,19 @@ table(df$LoanStatus)
 
 # As such, the Chargedoff, Completed, and Defaulted loans are the only ones that have finished.
 df <- df[df$LoanStatus %in% c("Chargedoff", "Completed", "Defaulted"),]
+
+# Removing identifier columns from predictor space
+df <- df[, !names(df) %in% c("ListingKey", "ListingNumber","GroupKey","LoanKey","LoanNumber",'MemberKey')]
+
+# Removing alpha versions of ProsperRating, correlated/corresponds with numeric version
+df <-df[, names(df) != "ProsperRating..Alpha"]
+
+# Make date columns into Dates in R
+
+df$ListingCreationDate <- as.Date(df$ListingCreationDate)
+df$ClosedDate <- as.Date(df$ClosedDate)
+df$DateCreditPulled <- as.Date(df$DateCreditPulled)
+df$FirstRecordedCreditLine <- as.Date(df$FirstRecordedCreditLine)
+df$LoanOriginationDate <- as.Date(df$LoanOriginationDate)
 
 write.csv(df, "CleanedProsperData.csv")
