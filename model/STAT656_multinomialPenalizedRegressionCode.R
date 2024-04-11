@@ -1,5 +1,4 @@
 data <- read.csv("CleanedProsperData.csv")
-
 library(caret)
 library(randomForest)
 Y     = factor(data$LoanStatus)
@@ -25,11 +24,11 @@ data$LoanNumber <- NULL
 data$IsBorrowerHomeowner <- as.numeric(data$IsBorrowerHomeowner)
 data$CurrentlyInGroup <- as.numeric(data$CurrentlyInGroup)
 data$IncomeVerifiable <- as.numeric(data$IncomeVerifiable)
-
+data$X <- NULL
 
 data <- data[,colSums(is.na(data)) == 0]
-set.seed(8)
-trainIndex <- createDataPartition(Y, p=0.7)[[1]]
+set.seed(656)
+trainIndex <- createDataPartition(Y, p=0.8)[[1]]
 
 xTrain = data[trainIndex, ]
 xTest  = data[-trainIndex, ]
