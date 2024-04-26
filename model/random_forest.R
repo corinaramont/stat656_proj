@@ -6,6 +6,7 @@ library(randomForest)
 library(caret)
 library(ggplot2)
 library(tidyr)
+library(randomForest)
 
 data = read.csv("datasets/CleanedProsperData.csv")
 
@@ -17,7 +18,7 @@ train_data = (data[train_index,])[,-c(1,2)]
 test_data = (data[-train_index,])[,-c(1,2)]
 
 # Run model --------------------------------------------------------------------
-#rf = randomForest(LoanStatus ~ ., data = train_data, ntree = 5000)
+rf = randomForest(LoanStatus ~ ., data = train_data, ntree = 5000)
 
 # Tuning random forest ---------------------------------------------------------
 

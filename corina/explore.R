@@ -39,8 +39,8 @@ library(caret)
 ## partition 80% into training and 20% into testing
 train_index = createDataPartition(remain_data$LoanStatus, p = .8, list = FALSE) %>% 
   as.vector(.)
-train_data = (remain_data[train_index,])[,-c(1,2)]
-test_data = (remain_data[-train_index,])[,-c(1,2)]
+train_data = (remain_data[train_index,])[,-c(1)] # removed just X instead of ListingKey as well
+test_data = (remain_data[-train_index,])[,-c(1)]
 
 rf = randomForest(factor(LoanStatus) ~ ., data = train_data, ntree = 1000)
 print(rf)
