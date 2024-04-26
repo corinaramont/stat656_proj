@@ -63,9 +63,6 @@ df <- df[df$LoanStatus %in% c("Chargedoff", "Completed", "Defaulted"),]
 # Removing identifier columns from predictor space
 df <- df[, !names(df) %in% c("ListingKey", "ListingNumber","GroupKey","LoanKey","LoanNumber",'MemberKey')]
 
-# Removing alpha versions of ProsperRating, correlated/corresponds with numeric version
-df <-df[, !names(df) == "ProsperRating..Alpha."]
-
 # Make date columns into Dates in R
 
 df$ListingCreationDate <- as.Date(df$ListingCreationDate)
@@ -74,7 +71,7 @@ df$DateCreditPulled <- as.Date(df$DateCreditPulled)
 df$FirstRecordedCreditLine <- as.Date(df$FirstRecordedCreditLine)
 df$LoanOriginationDate <- as.Date(df$LoanOriginationDate)
 
-df$ProsperRatingNew = ifelse(!is.na(df$CreditGrade), df$CreditGrade, df$ProsperRating..Alpha.)
+df$ProsperRatingNew = ifelse(df$CreditGrade!="", df$CreditGrade, df$ProsperRating..Alpha.)
 df$ProsperRatingNew[df$ProsperRatingNew==""] = 'NC'
 df = df[, !names(df) %in% c("ProsperRating..numeric.", "ProsperRating..Alpha.", "CreditGrade")]
 
