@@ -20,9 +20,7 @@ train_data = (remain_data[train_index,])[,-c(1,2)]
 test_data = (remain_data[-train_index,])[,-c(1,2)]
 
 # Run model --------------------------------------------------------------------
-<<<<<<< HEAD
-rf = randomForest(LoanStatus ~ ., data = train_data, ntree = 5000)
-=======
+
 rf1 = randomForest(factor(LoanStatus) ~ ., data = train_data, 
                   sampsize = c('Chargedoff' = 300, 'Completed' = 300,
                                'Defaulted' = 300), 
@@ -58,7 +56,6 @@ oob_data = data.frame(
             rf$err.rate[,"Completed"], rf$err.rate[,"Defaulted"]))
 ggplot(data = oob_data, aes(x = trees, y= error)) + 
   geom_line(aes(color = type)) + ggtitle("Sampling 300 of each class")
->>>>>>> 29335e39e3d0e2c3a735a836219e0612f2473c4d
 
 # Tuning random forest ---------------------------------------------------------
 
