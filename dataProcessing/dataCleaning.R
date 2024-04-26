@@ -10,6 +10,7 @@ names(df)
 head(df)
 summary(df)
 
+
 # remove duplicated rows
 df = df %>% distinct()
 
@@ -72,6 +73,20 @@ df$ClosedDate <- as.Date(df$ClosedDate)
 df$DateCreditPulled <- as.Date(df$DateCreditPulled)
 df$FirstRecordedCreditLine <- as.Date(df$FirstRecordedCreditLine)
 df$LoanOriginationDate <- as.Date(df$LoanOriginationDate)
+
+df$ProsperRatingNew = ifelse(!is.na(df$CreditGrade), df$CreditGrade, df$ProsperRating..Alpha.)
+df$ProsperRatingNew[df$ProsperRatingNew==""] = 'NC'
+df = df[, !names(df) %in% c("ProsperRating..numeric.", "ProsperRating..Alpha.", "CreditGrade")]
+
+df$EmploymentStatus[df$EmploymentStatus == ""] = "Not available"
+df$EmploymentStatus[df$EmploymentStatus == "Retired"] = "Not employed"
+df$IncomeRange[df$IncomeRange == "$0"] = "Not employed"
+
+df$IncomeRange = factor(df$IncomeRange, levels = c('Not displayed', 'Not employed', '$1-24,999', '$25,000-49,999', 
+                                                   '$50,000-74,999', '$75,000-99,999', '$100,000+'), ordered = TRUE)
+df$ProsperRatingNew = factor(df$ProsperRatingNew, levels = c("NC","HR","E","D","C","B","A","AA"), ordered = TRUE)
+df$EmploymentStatus = factor(df$EmploymentStatus, levels = c("Not employed", "Not available", "Other","Part-time",
+                                                             "Self-employed", "Full-time", "Employed"), ordered = TRUE)
 
 write.csv(df, "datasets/CleanedProsperData.csv")
 
